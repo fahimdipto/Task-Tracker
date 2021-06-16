@@ -1,0 +1,542 @@
+{
+	"info": {
+		"_postman_id": "7fbfc327-199f-4910-b744-283189891cf4",
+		"name": "Test Mern",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Testing\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/add",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"bodyData=JSON.parse(responseBody)\r",
+							"let arr = bodyData\r",
+							"console.log(arr[arr.length - 1]._id)\r",
+							"pm.environment.set(\"usr_id\", arr[arr.length - 1]._id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"let Schema ={\r",
+							"    \"$schema\": \"http://json-schema.org/draft-07/schema\",\r",
+							"    \"$id\": \"http://example.com/example.json\",\r",
+							"    \"type\": \"object\",\r",
+							"    \"title\": \"The root schema\",\r",
+							"    \"description\": \"The root schema comprises the entire JSON document.\",\r",
+							"    \"default\": {},\r",
+							"    \"examples\": [\r",
+							"        {\r",
+							"            \"_id\": \"60c62091e1a8e518a09744ab\",\r",
+							"            \"username\": \"Dipto\",\r",
+							"            \"createdAt\": \"2021-06-13T15:13:21.079Z\",\r",
+							"            \"updatedAt\": \"2021-06-13T15:13:21.079Z\",\r",
+							"            \"__v\": 0\r",
+							"        }\r",
+							"    ],\r",
+							"    \"required\": [\r",
+							"        \"_id\",\r",
+							"        \"username\",\r",
+							"        \"createdAt\",\r",
+							"        \"updatedAt\",\r",
+							"        \"__v\"\r",
+							"    ],\r",
+							"    \"properties\": {\r",
+							"        \"_id\": {\r",
+							"            \"$id\": \"#/properties/_id\",\r",
+							"            \"type\": \"string\",\r",
+							"            \"title\": \"The _id schema\",\r",
+							"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"            \"default\": \"\",\r",
+							"            \"examples\": [\r",
+							"                \"60c62091e1a8e518a09744ab\"\r",
+							"            ]\r",
+							"        },\r",
+							"        \"username\": {\r",
+							"            \"$id\": \"#/properties/username\",\r",
+							"            \"type\": \"string\",\r",
+							"            \"title\": \"The username schema\",\r",
+							"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"            \"default\": \"\",\r",
+							"            \"examples\": [\r",
+							"                \"Dipto\"\r",
+							"            ]\r",
+							"        },\r",
+							"        \"createdAt\": {\r",
+							"            \"$id\": \"#/properties/createdAt\",\r",
+							"            \"type\": \"string\",\r",
+							"            \"title\": \"The createdAt schema\",\r",
+							"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"            \"default\": \"\",\r",
+							"            \"examples\": [\r",
+							"                \"2021-06-13T15:13:21.079Z\"\r",
+							"            ]\r",
+							"        },\r",
+							"        \"updatedAt\": {\r",
+							"            \"$id\": \"#/properties/updatedAt\",\r",
+							"            \"type\": \"string\",\r",
+							"            \"title\": \"The updatedAt schema\",\r",
+							"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"            \"default\": \"\",\r",
+							"            \"examples\": [\r",
+							"                \"2021-06-13T15:13:21.079Z\"\r",
+							"            ]\r",
+							"        },\r",
+							"        \"__v\": {\r",
+							"            \"$id\": \"#/properties/__v\",\r",
+							"            \"type\": \"integer\",\r",
+							"            \"title\": \"The __v schema\",\r",
+							"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"            \"default\": 0,\r",
+							"            \"examples\": [\r",
+							"                0\r",
+							"            ]\r",
+							"        }\r",
+							"    },\r",
+							"    \"additionalProperties\": true\r",
+							"}\r",
+							"pm.test('Schema is valid', function() {\r",
+							"  pm.response.to.have.jsonSchema(Schema);\r",
+							"});\r",
+							"//Step 3: Check for error response\r",
+							"pm.test('No error is present in the schema', function () {\r",
+							"    let Result=tv4.validateResult(pm.response.json(), Schema);\r",
+							"    if(!Result.valid){\r",
+							"        console.log(Result);\r",
+							"    }\r",
+							" \r",
+							"    pm.expect(Result.valid).to.be.true;\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/{{usr_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{usr_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"whoami\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/update/{{usr_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"update",
+						"{{usr_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/{{usr_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{usr_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Exercise",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Tester\",\r\n    \"description\":\"Test Task\",\r\n    \"duration\":3,\r\n    \"date\":\"2021-06-13T15:13:21.079Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/exercises/add",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"exercises",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exercise List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"bodyData=JSON.parse(responseBody)\r",
+							"let arr = bodyData\r",
+							"console.log(bodyData[0].username)\r",
+							"//Step 2\r",
+							"pm.environment.set(\"tsk_id\", arr[arr.length - 1]._id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/exercises/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"exercises",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Exercise Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"let Schema ={\r",
+							"    \"$schema\": \"http://json-schema.org/draft-07/schema\",\r",
+							"    \"$id\": \"http://example.com/example.json\",\r",
+							"    \"type\": \"object\",\r",
+							"    \"title\": \"The root schema\",\r",
+							"    \"description\": \"The root schema comprises the entire JSON document.\",\r",
+							"    \"default\": {},\r",
+							"    \"examples\": [\r",
+							"        {\r",
+							"            \"_id\": \"60c64a51432dad1654fdb5ba\",\r",
+							"            \"username\": \"Dowto\",\r",
+							"            \"description\": \"xdxd\",\r",
+							"            \"duration\": 3,\r",
+							"            \"date\": \"2021-06-13T15:13:21.079Z\",\r",
+							"            \"createdAt\": \"2021-06-13T18:11:30.000Z\",\r",
+							"            \"updatedAt\": \"2021-06-13T18:11:30.000Z\",\r",
+							"            \"__v\": 0\r",
+							"        }\r",
+							"    ],\r",
+							"    \"required\": [\r",
+							"        \"_id\",\r",
+							"        \"username\",\r",
+							"        \"description\",\r",
+							"        \"duration\",\r",
+							"        \"date\",\r",
+							"        \"createdAt\",\r",
+							"        \"updatedAt\",\r",
+							"        \"__v\"\r",
+							"    ],\r",
+							"    \"properties\": {\r",
+							"        \"_id\": {\r",
+							"            \"$id\": \"#/properties/_id\",\r",
+							"            \"type\": \"string\",\r",
+							"            \"title\": \"The _id schema\",\r",
+							"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"            \"default\": \"\",\r",
+							"            \"examples\": [\r",
+							"                \"60c64a51432dad1654fdb5ba\"\r",
+							"            ]\r",
+							"        },\r",
+							"        \"username\": {\r",
+							"            \"$id\": \"#/properties/username\",\r",
+							"            \"type\": \"string\",\r",
+							"            \"title\": \"The username schema\",\r",
+							"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"            \"default\": \"\",\r",
+							"            \"examples\": [\r",
+							"                \"Dowto\"\r",
+							"            ]\r",
+							"        },\r",
+							"        \"description\": {\r",
+							"            \"$id\": \"#/properties/description\",\r",
+							"            \"type\": \"string\",\r",
+							"            \"title\": \"The description schema\",\r",
+							"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"            \"default\": \"\",\r",
+							"            \"examples\": [\r",
+							"                \"xdxd\"\r",
+							"            ]\r",
+							"        },\r",
+							"        \"duration\": {\r",
+							"            \"$id\": \"#/properties/duration\",\r",
+							"            \"type\": \"integer\",\r",
+							"            \"title\": \"The duration schema\",\r",
+							"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"            \"default\": 0,\r",
+							"            \"examples\": [\r",
+							"                3\r",
+							"            ]\r",
+							"        },\r",
+							"        \"date\": {\r",
+							"            \"$id\": \"#/properties/date\",\r",
+							"            \"type\": \"string\",\r",
+							"            \"title\": \"The date schema\",\r",
+							"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"            \"default\": \"\",\r",
+							"            \"examples\": [\r",
+							"                \"2021-06-13T15:13:21.079Z\"\r",
+							"            ]\r",
+							"        },\r",
+							"        \"createdAt\": {\r",
+							"            \"$id\": \"#/properties/createdAt\",\r",
+							"            \"type\": \"string\",\r",
+							"            \"title\": \"The createdAt schema\",\r",
+							"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"            \"default\": \"\",\r",
+							"            \"examples\": [\r",
+							"                \"2021-06-13T18:11:30.000Z\"\r",
+							"            ]\r",
+							"        },\r",
+							"        \"updatedAt\": {\r",
+							"            \"$id\": \"#/properties/updatedAt\",\r",
+							"            \"type\": \"string\",\r",
+							"            \"title\": \"The updatedAt schema\",\r",
+							"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"            \"default\": \"\",\r",
+							"            \"examples\": [\r",
+							"                \"2021-06-13T18:11:30.000Z\"\r",
+							"            ]\r",
+							"        },\r",
+							"        \"__v\": {\r",
+							"            \"$id\": \"#/properties/__v\",\r",
+							"            \"type\": \"integer\",\r",
+							"            \"title\": \"The __v schema\",\r",
+							"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"            \"default\": 0,\r",
+							"            \"examples\": [\r",
+							"                0\r",
+							"            ]\r",
+							"        }\r",
+							"    },\r",
+							"    \"additionalProperties\": true\r",
+							"}\r",
+							"pm.test('Schema is valid', function() {\r",
+							"  pm.response.to.have.jsonSchema(Schema);\r",
+							"});\r",
+							"//Step 3: Check for error response\r",
+							"pm.test('No error is present in the schema', function () {\r",
+							"    let Result=tv4.validateResult(pm.response.json(), Schema);\r",
+							"    if(!Result.valid){\r",
+							"        console.log(Result);\r",
+							"    }\r",
+							" \r",
+							"    pm.expect(Result.valid).to.be.true;\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/exercises/{{tsk_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"exercises",
+						"{{tsk_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Exercise",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Tester-up\",\r\n    \"description\":\"tester at testing\",\r\n    \"duration\":12,\r\n    \"date\":\"2021-06-13T15:13:21.079Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/exercises/update/{{tsk_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"exercises",
+						"update",
+						"{{tsk_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Exercsie",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/exercises/60c6473f8a46f41034cb1653",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"exercises",
+						"60c6473f8a46f41034cb1653"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:5000"
+		},
+		{
+			"key": "usr_id",
+			"value": "01"
+		},
+		{
+			"key": "tsk_id",
+			"value": "1"
+		}
+	]
+}
