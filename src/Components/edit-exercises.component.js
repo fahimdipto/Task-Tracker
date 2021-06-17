@@ -21,8 +21,11 @@ export default class EditExercises extends Component {
 
     }
 
-    componentDidMount() {
-        axios.get('http://localhost:5000/exercises/'+this.props.match.params.id)
+   async componentDidMount() {
+        this.setState({
+            loading: true
+        })
+        await axios.get('http://localhost:5000/exercises/'+this.props.match.params.id)
             .then(response =>{
 
                     this.setState({
@@ -35,16 +38,18 @@ export default class EditExercises extends Component {
             .catch((error)=>{
                 console.log(error);
             })
-        axios.get('http://localhost:5000/users/')
-            .then(response =>{
-                if(response.data.length>0){
-                    this.setState({
-                            users: response.data.map(user => user.username),
-                            username: response.data[0].username
-                        }
-                    )
-                }
-            })
+        // await axios.get('http://localhost:5000/users/')        for mapping values if required ever
+        //     .then(response =>{
+        //         if(response.data.length>0){
+        //             this.setState({
+        //                     users: response.data.map(user => user.username)
+        //                 }
+        //             )
+        //         }
+        //     })
+        this.setState({
+            loading: false
+        })
     }
 
     onChangeUsername(e) {
@@ -87,17 +92,21 @@ export default class EditExercises extends Component {
 
     render() {
         return (
+            <>
+                {(this.state.loading)?(
+                    <h2>Loading ...</h2>
+                ) :(
             <div>
                 <h3>Edit Task</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className=" mb-3">
                         <label>Username:</label>
-                        <input type="text" className="form-control" placeholder="Your Name"  value={this.state.username} on
+                        <input type="text" className="form-control" placeholder="Enter Correct Name"  value={this.state.username} on
                                onChange={this.onChangeUsername}/>
                     </div>
                     <div className="mb-3">
                         <label>Description:</label>
-                        <input type="text" className="form-control" placeholder="e.g: Who this"  value={this.state.description} on
+                        <input type="text" className="form-control" placeholder="Name of the task"  value={this.state.description} on
                                onChange={this.onChangeDescription}/>
                     </div>
                     <div className="mb-3">
@@ -116,6 +125,10 @@ export default class EditExercises extends Component {
                     </div>
                 </form>
             </div>
+                )}
+            </>
+
         )
     }
+
 }

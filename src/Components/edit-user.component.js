@@ -25,22 +25,23 @@ export default class EditUser extends Component {
             .catch((error)=>{
                 console.log(error);
             })
-        axios.get('http://localhost:5000/users/')
-            .then(response =>{
-                if(response.data.length>0){
-                    this.setState({
-                            users: response.data.map(user => user.username),
-                            username: response.data[0].username
-                        }
-                    )
-                }
-            })
+        // axios.get('http://localhost:5000/users/')  //mapping
+        //     .then(response =>{
+        //         if(response.data.length>0){
+        //             this.setState({
+        //                     users: response.data.map(user => user.username),
+        //                     username: response.data[0].username
+        //                 }
+        //             )
+        //         }
+        //     })
     }
 
     onChangeUsername(e) {
-        this.setState({
-            username: e.target.value
-        });
+
+            this.setState({
+                username: e.target.value
+            })
     }
 
 
