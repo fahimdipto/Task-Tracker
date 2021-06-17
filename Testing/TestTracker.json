@@ -9,6 +9,17 @@
 			"name": "Create User",
 			"event": [
 				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Add successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
 					"listen": "prerequest",
 					"script": {
 						"exec": [
@@ -54,7 +65,23 @@
 							"bodyData=JSON.parse(responseBody)\r",
 							"let arr = bodyData\r",
 							"console.log(arr[arr.length - 1]._id)\r",
-							"pm.environment.set(\"usr_id\", arr[arr.length - 1]._id);"
+							"pm.environment.set(\"usr_id\", arr[arr.length - 1]._id);\r",
+							"\r",
+							"\r",
+							"pm.test(\"Property Exist\", () => {  \r",
+							"   \r",
+							"    pm.expect(bodyData[0]).to.include.all.keys(\"username\");\r",
+							"});\r",
+							"pm.test(\"Contains both property\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"username\");\r",
+							"   \r",
+							"});\r",
+							"pm.test(\"The response has all properties\", () => {\r",
+							"    //parse the response json and test three properties\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson[0].username).to.be.a('string');\r",
+							"});\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -198,6 +225,19 @@
 		},
 		{
 			"name": "Update User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -226,17 +266,40 @@
 		},
 		{
 			"name": "Delete User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
-				"method": "DELETE",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Tester-up\",\r\n    \"description\":\"tester at testing\",\r\n    \"duration\":12,\r\n    \"date\":\"2021-06-13T15:13:21.079Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{url}}/users/{{usr_id}}",
+					"raw": "{{url}}/exercises/update/{{tsk_id}}",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"users",
-						"{{usr_id}}"
+						"exercises",
+						"update",
+						"{{tsk_id}}"
 					]
 				}
 			},
@@ -244,6 +307,19 @@
 		},
 		{
 			"name": "Create Exercise",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Add successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -280,7 +356,27 @@
 							"let arr = bodyData\r",
 							"console.log(bodyData[0].username)\r",
 							"//Step 2\r",
-							"pm.environment.set(\"tsk_id\", arr[arr.length - 1]._id);"
+							"pm.environment.set(\"tsk_id\", arr[arr.length - 1]._id);\r",
+							"\r",
+							"pm.test(\"Properties Exist\", () => {  \r",
+							"   \r",
+							"    pm.expect(bodyData[0]).to.include.all.keys(\"username\",\"description\",\"duration\",\"date\");\r",
+							"});\r",
+							"pm.test(\"Contains both property\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"username\");\r",
+							"   pm.expect(pm.response.text()).to.include(\"description\");\r",
+							"   pm.expect(pm.response.text()).to.include(\"duration\");\r",
+							"   pm.expect(pm.response.text()).to.include(\"date\");\r",
+							"});\r",
+							"pm.test(\"The response has all properties\", () => {\r",
+							"    //parse the response json and test three properties\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson[0].username).to.be.a('string');\r",
+							"    pm.expect(responseJson[0].description).to.be.a('string');\r",
+							"    pm.expect(responseJson[0].duration).to.be.a(\"Number\");\r",
+							"    pm.expect(responseJson[0].description).to.be.a('string');\r",
+							"});\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -488,6 +584,19 @@
 		},
 		{
 			"name": "Delete Exercsie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
