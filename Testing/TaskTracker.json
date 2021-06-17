@@ -492,13 +492,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/exercises/60c6473f8a46f41034cb1653",
+					"raw": "{{url}}/exercises/{{tsk_id}}",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"exercises",
-						"60c6473f8a46f41034cb1653"
+						"{{tsk_id}}"
 					]
 				}
 			},
