@@ -1,7 +1,7 @@
 const  express = require("express")
 const cors = require("cors")
 const mongoose = require("mongoose")
-
+const errres = require("./utils/errorresponse")
 require('dotenv').config();
 
 const app = express();
@@ -20,6 +20,7 @@ const usersRouter = require('./routes/users');
 
 app.use('/users',usersRouter);
 app.use('/exercises',exercisesRouter);
+app.use("*",(req,res)=> res.status(404).json(errres("No Content found", "Wrong URL info")))
 app.listen(port, ()=>{
     console.log(`Server is running on port: ${port}`);
 });

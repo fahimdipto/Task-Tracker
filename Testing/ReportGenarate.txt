@@ -1,2 +1,2 @@
-"newman run https://www.getpostman.com/collections/449ba6235d03ca758734 -r html" run this from command line to genarate report for test script.
+"newman run https://www.getpostman.com/collections/d5b60b1fb314e866b3a2 -r html" run this from command line to genarate report for test script.
 you will get the report in the newman directory. 

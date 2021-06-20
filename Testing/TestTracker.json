@@ -230,8 +230,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
-							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"pm.test(\"Modification Sucessfull\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -280,7 +280,7 @@
 				}
 			],
 			"request": {
-				"method": "POST",
+				"method": "DELETE",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -292,14 +292,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/exercises/update/{{tsk_id}}",
+					"raw": "{{url}}/users/{{usr_id}}",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"exercises",
-						"update",
-						"{{tsk_id}}"
+						"users",
+						"{{usr_id}}"
 					]
 				}
 			},
@@ -556,6 +555,19 @@
 		},
 		{
 			"name": "Update Exercise",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Modification Sucessfull\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -608,6 +620,36 @@
 					"path": [
 						"exercises",
 						"{{tsk_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Negative Testing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Wrong URL info, Negative testing successful\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/negative",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"negative"
 					]
 				}
 			},
