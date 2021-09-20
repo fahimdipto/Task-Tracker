@@ -2,6 +2,7 @@ import React,{Component} from "react";
 import {Link} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import axios from 'axios';
+import swal from '@sweetalert/with-react'
 
 
 export default class CreateUser extends Component{
@@ -36,7 +37,14 @@ export default class CreateUser extends Component{
         console.log(user);
         axios.post('http://localhost:5000/users/add',user)
             .then(res => console.log(res.data))
-
+        swal(
+            <div>
+                <h1>Congrats</h1>
+                <p>
+                    User Created
+                </p>
+            </div>
+        )
         this.setState
             ({username: ''})
     }
