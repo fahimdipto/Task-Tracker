@@ -21,4 +21,4 @@ A simple website where you can keep track of task assigned to different User.
 
 **Step 2:** cd to the backend repo and run command nodemon server!
 
-**Step 3:** cd to the frontend repo and run command npm start!
+**Step 3:** cd to the cloned repo run command npm start!
